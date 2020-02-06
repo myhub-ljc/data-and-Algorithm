@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>二叉搜索树</title>
+</head>
+<body>
+  <script>
+    /*优点
+        数组的主要优点是根据下标值访问效率会很高
+        但是如果要求根据元素来查找对应的位置呢
+        比较好的方式是先对数组进行排序，再进行二分查找
+      缺点：
+        数组在插入和删除数据时，需要有大量的位移操作（尤其是插入到首位或者中间位置的时候），效率会很低
+
+      二叉树最常见的存储方式还是使用链表存储
+
+      二叉搜索树
+      二叉搜索树(BST),也称二叉排序树或二叉查找树
+      二叉搜索树是一颗二叉树，可以为空；
+      如果不为空，满足以下性质：
+        非空左子树的所有键值小于其根节点的键值
+        非空右子树的所有键值大于其根节点的键值
+        左，右子树本身也是二叉搜索树
+    */
+
+    //二叉搜索树的封装
+    function BinarySearchTree(){
+      //在搞个内部类
+      function Node(key){
+        this.key = key;
+        this.left = null;
+        this.right = null;
+      }
+      //属性
+      this.root = null;
+
+      //方法
+      //1,插入数据:对外给用户调用的方法 
+      BinarySearchTree.prototype.insert = function (key) {
+        //1,根据key创建节点
+        var newNode = new Node(key); 
+
+        //2,判断根节点是否有值
+        if(this.root == null){
+          this.root = newNode;
+        }else{
+          this.insertNode(this.root, newNode)
+        }
+      }
+
+      /*
+        例如：我们想要在二叉树中插入14(理解递归的写法)
+        第一次：node -> 9  newNode -> 14
+        第二次：node -> 13  newNode -> 14
+        第三次：node -> 15 newNode -> 14
+        第四次: 将14作为它的左孩子了
+      */
+      BinarySearchTree.prototype.insertNode = function (node, newNode) {
+        if(newNode.key < node.key){//向左查找
+          if(node.left == null){
+            node.left = newNode;
+          }else{
+            this.insertNode(node.left, newNode)
+          }
+        }else {//向右查找
+          if(node.right == null){
+            node.right = newNode;
+          }else{
+            this.insertNode(node.right, newNode)
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>队列的封装</title>
+</head>
+<body>
+  <script>
+    function Queue(){
+      //队列属性
+      this.items = []
+
+      //队列常见方法
+      //1，将元素加入到队列中
+      Queue.prototype.enqueue = function (element) {
+        this.items.push(element)
+      }
+
+      //2,从队列中删除前端元素(并返回该元素)
+      Queue.prototype.dequeue = function () {
+        return this.items.shift()
+      }
+
+      //3,查看前端的元素
+      Queue.prototype.front = function () {
+        return this.items[0]
+      }
+
+      //4,查看队列是否为空
+      Queue.prototype.isEmpty = function () {
+        return this.items.length == 0
+      }
+
+      //5,查看队列中元素的个数
+      Queue.prototype.size = function () {
+        return this.items.length
+      }
+
+      //6,toString方法
+      Queue.prototype.toString = function () {
+        var resultString = ''
+        for(var i = 0; i < this.items.length; i++){
+          resultString += this.items[i] + ' '
+        }
+        return resultString
+      }
+    }
+    /*var s = new Queue()
+    s.enqueue(20)
+    s.enqueue(30)
+    s.enqueue(40)
+    alert(s)*/
+
+    //面试题: 击鼓传花
+    function passGame(nameList, num) {
+      //创建一个队列
+      var queue = new Queue()
+
+      //将元素压入到队列中
+      for(var i = 0; i < nameList.length; i++){
+        queue.enqueue(nameList[i])
+      }
+      //开始数数字
+      while(queue.size() > 1){
+        //不是num的时候，将其重新加入到队列中
+        //是num的时候，将其从队列中删除
+        for(var i = 0; i < num - 1; i++){
+          queue.enqueue(queue.dequeue())
+        }
+        queue.dequeue()
+      }
+      alert(queue.size())
+      var endName = queue.front()
+      alert("最终剩下的人:" + endName)
+      return nameList.indexOf(endName)
+    }
+
+    //测试击鼓传花
+    names=['kobe', 'lily', 'why', 'lucy']
+    alert(passGame(names, 3))
+  </script>
+</body>
+</html>

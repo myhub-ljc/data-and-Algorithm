@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>冒泡排序</title>
+</head>
+<body>
+  <script>
+    var nums = [1, 34, 2, 890];
+    for(var j = nums.length - 1; j > 0; j--){
+      for(var i = 0; i <= nums.length - 1; i++){
+        if(nums[i] > nums[i+1]){
+          var temp = nums[i];
+          nums[i] = nums[i+1];
+          nums[i+1] = temp;
+        }
+      }
+    }
+    console.log(nums);
+  </script>
+</body>
+</html>

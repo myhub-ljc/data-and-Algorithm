@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise</title>
+</head>
+<body>
+  <script>
+    //promise 主要是解决异步回调的问题
+
+    //传统方式,大部分用回调函数,事件驱动
+    let a=1;
+    let promise = new Promise(function (resolve, reject){
+      if(a == 10){
+        resolve('成功了');
+      }else{
+        reject('失败了');
+      }
+    })
+
+    promise.then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+
+    //promise.all方法的使用(把promise打包，扔到一个数组里面,打包完还是一个promise对象,但必须确保都是统一的成功状态)
+    let p1 = Promise.resolve('aa');
+    let p2 = Promise.resolve('bb');
+    let p3 = Promise.resolve('cc');
+
+    Promise.all([p1,p2,p3]).then(res => { 
+      //console.log(res); 
+      let [p1,p2,p3] = res;
+      console.log(p1,p2,p3);
+    })
+  </script>
+</body>
+</html>

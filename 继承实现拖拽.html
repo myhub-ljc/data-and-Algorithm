@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>继承实现拖拽</title>
+  <style>
+    .box{
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      top: 0;
+    }
+    .left{
+      left: 0;
+    }
+    .right{
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="div1" class="box left">div1</div>
+  <div id="div2" class="box right">div2</div>
+
+  <script>
+    //普通拖拽 -- 父类
+    class Drag{
+      constructor(id){
+        this.oDiv = document.querySelector(id);
+        this.disX = 0;
+        this.disY = 0;
+        this.init();
+      }
+      init(){
+        this.oDiv.onmousedown = function(ev){
+          this.disX = ev.clientX - this.oDiv.offsetLeft;
+          this.disY = ev.clientY - this.oDiv.offsetTop;
+
+          document.onmousemove = this.fnMove.bind(this);
+          document.ommouseup = this.fnUp.bind(this);
+
+          return false;//阻止默认事件
+        }.bind(this);//改变this的指向
+      }
+      fnMove(ev){
+        this.oDiv.style.left = ev.clientX - this.disX + 'px';
+        this.oDiv.style.top = ev.clientY - this.disY + 'px';
+      }
+      fnUp(ev){
+        document.onmousemove = null;
+        document.onmouseup = null;  
+      }
+    }
+
+    //字类  --限制移动的范围
+    class LimitDrag extends Drag{
+      fnMove(ev){
+        super.fnMove(ev);
+        if(this.oDiv.offsetLeft <= 0){
+          this.oDiv.style.left = 0;
+        }
+        if(this.oDiv.offsetTop <= 0){
+          this.oDiv.style.top = 0;
+        }
+      }
+    }
+    //调用
+    new Drag('#div1');
+    new LimitDrag('#div2');
+  </script>
+</body>
+</html>

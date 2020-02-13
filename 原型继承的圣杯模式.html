@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>平时练习</title>
+</head>
+<body>
+  <script type="text/javascript">
+    //圣杯模式
+    //Teacher.prototype.name = 'Mr.zhang';
+    function Teacher(){}
+    function Student(){}
+    function Buffer(){}
+    inherit(Student, Teacher);
+    var s = new Student();
+    var t = new Teacher();
+
+    console.log(s);
+    console.log(t);
+
+    //继承
+    function inherit(Target, Origin){
+      function Buffer(){}
+      Buffer.prototype = Origin.prototype;
+      Target.prototype = new Buffer();
+      Target.prototype.constructor = Target;
+      Target.prototype.super_class = Origin;
+    }
+  </script>
+</body>
+</html>

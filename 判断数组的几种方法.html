@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>判断数组的几种方法</title>
+</head>
+<body>
+  <script>
+    //方法1: constructor
+    var a = [];
+    console.log(a.constructor);
+    
+    //方法2：instanceof
+    console.log(a instanceof Array);
+
+    //方法3：自带
+    console.log(Array.isArray(a));
+
+    //方法4: 
+    var str = Object.prototype.toString.call(a);
+    console.log(str);
+  </script>
+</body>
+</html>

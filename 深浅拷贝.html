@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象的深浅拷贝</title>
+</head>
+<body>
+  <script>
+    //浅拷贝：我们利用循环的方式将其复制一份
+
+    /*Object.prototype.num = 1;
+    var person1 = {
+      name: '秃头的科比',
+      age: 18,
+      son: {
+        first: '小飞',
+        second: '狗熊'
+      }
+    }
+  
+    var person2 = clone(person1, person2);
+
+    //console.log(person1, person2);
+    //我们在这来测试一下方法1
+    person2.name = '菜鸡';
+    person2.son.third = '世豪'; 
+    console.log(person1, person2);
+
+    function clone(origin, target){
+      var tar = target || {};
+      for(var key in origin){
+        if(origin.hasOwnProperty(key)){
+          tar[key] = origin[key];
+        }
+    }
+    return tar;
+    }
+    */
+
+
+
+    //深拷贝: 
+    Object.prototype.num = 1;
+    var person1 = {
+      name: '秃头的科比',
+      age: 18,
+      children: {
+        first: {
+            name: '小飞',
+            age: 18
+          }
+        },
+      car: ['Benz', 'Mazda']
+      }
+  
+    var person2 =deepClone(person1);
+
+    //console.log(person1, person2);
+    //我们在这来测试一下方法1
+    person2.name = '菜鸡';
+    person2.children.second = {
+      name: '熊哥',
+      age: 18
+    } 
+    person2.car.push = 'lamborghini';
+    console.log(person1, person2);
+
+    function deepClone(origin, target){
+      var target = target || {},
+          toStr = Object.prototype.toString,
+          arrType = '[object Array]';
+
+      for(var key in origin){
+        if(origin.hasOwnProperty(key)){
+          if(typeof(origin[key]) === 'object' && origin[key] !== null){
+            /*if(toStr.call(origin[key]) === arrType){
+              target[key] = [];
+            }else{
+              target[key] = {};
+            }*/
+            toStr.call(origin[key]) === arrType
+            ? target[key] = []
+            : target[key] = {};
+            deepClone(origin[key], target[key]);
+          }else{
+            target[key] = origin[key];
+          }
+        }
+      }
+      return target;
+    }
+  </script>
+</body>
+</html>

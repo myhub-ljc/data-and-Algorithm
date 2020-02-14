@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>玩好数组</title>
+</head>
+<body>
+  <script>
+    //通过系统内置的Array构造函数声明数组
+    //所有数组都继承于Array.prototype
+    //1,数组的push和unshift(数组头部插入)方法
+    //push是将新的元素从数组的尾部开始插入的
+    //unshift是将新的元素从数组的头部开始插入的
+    /*
+      如果问你这两者方法的返回值是什么？（百度的一道面试题)
+      答：是执行完方法之后新的数组的长度(这个需要注意)
+    */
+    /*我们手动实现一下push方法
+    var arr = [1, 2, 3];
+    Array.prototype.myPush = function (){
+      for(var i = 0; i < arguments.length; i++){
+        this[this.length] = arguments[i];
+      }
+      return this.length;
+    }*/
+      //arr.myPush(4);
+      //console.log(arr);
+
+
+    //2, 数组的pop和shift方法
+    //pop它会删除数组的最后一位，并把其返回出来
+    //shift它会删除数组的第一位，并把其返回出来
+
+
+    //3, 数组的reverse(反转数组)方法
+
+
+    /*
+      4, 数组的splice方法(重点)
+      arr.splice(开始项的下标（也可以是负数), 剪切长度, 剪切以后从你所开始的项开始添加所需要的数据)
+    */
+
+    
+    /*
+      5, 数组的sort(排序)方法(重点)
+      sort返回的是你排序以后的数组结果
+      sort是按照ascii码来排序的
+    */
+    /*sort内部原理
+    var arr = [27, 49, 0, 1];
+    arr.sort(function (a, b){
+      if(a > b){
+        return 1;
+      }else{
+        return -1;
+      }
+    })
+    console.log(arr);
+    */
+
+
+    /*
+      sort随机排序(面试官有可能会问的考题)
+      var arr = [1, 2, 3, 4, 5];
+      arr.sort(function (a, b){
+        var rand = Math.random();
+        if(rand - 0.5 > 0){
+          return 1;
+        }else{
+          return -1;
+        }
+        //也可以以下面这种方式简写
+        //return Math.random() - 0.5;
+      })
+      console.log(arr);
+    */
+
+    //再来看一个例题
+    /*var arr = [
+      {
+        son: '小飞',
+        age: '18'
+      },
+      {
+        son: '雄哥',
+        age: '10'
+      },
+      {
+        son: '杰哥',
+        age: 16
+      }
+    ];
+    arr.sort(function (a, b){
+      if(a.age > b.age){
+        return 1;
+      }else{
+        return -1;
+      }
+    });
+    console.log(arr);*/
+
+    /*
+      上面的方法都是在原来的基础上进行操作的,而下面的方法就不是了
+      1,  concat
+      var arr1 = [1, 2, 3];
+      var arr2 = [4, 5, 6];
+      var arr3 = arr1.concat(arr2);
+      console.log(arr3);
+
+      2,  slice
+      var arr = [1, 2, 3, 4, 5];
+      var arr1 = arr.slice(1, 3);
+      console.log(arr1);
+
+      3,  toString
+      4,  join的参数就是给元素之间添加不同的分隔符
+      5,  split('', 参数2)
+    */
+
+    /*
+      接下来我们重写一下unshift方法
+    */
+    /*
+      方法1：利用splice
+      var arr = ['a', 'b', 'c'];
+      Array.prototype.myUnshift = function (){
+        var pos = 0;
+        for(var i = 0; i < arguments.length; i++){
+          this.splice(pos, 0, arguments[i]);
+          pos++;
+        }
+      };
+      arr.myUnshift(1, 2, 3);
+      console.log(arr);
+    */
+    /*
+      方法2：利用concat
+      var arr = ['d', 'e', 'f'];
+      Array.prototype.myUnshift = function(){
+        var argArr = Array.prototype.slice.call(arguments);
+        var newArr = argArr.concat(this);
+        return newArr;
+      }
+      var newArr = arr.myUnshift('a', 'b', 'c');
+      console.log(newArr);
+    */
+
+
+    //下面是面试常考题：数组去重
+    </script>
+</body>
+</html>

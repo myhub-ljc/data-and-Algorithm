@@ -147,7 +147,37 @@
     */
 
 
-    //下面是面试常考题：数组去重
+    /*
+      下面是面试常考题：数组去重
+      var arr = [0, 0, 1, 1, 2, 2, 3, 3];
+      Array.prototype.unique = function(){
+        var temp = {};
+        var newArr = [];
+        for(var i=0; i < this.length; i++){
+          if(!temp.hasOwnProperty(this[i])){
+            temp[this[i]] = this[i];
+            newArr.push(this[i]);
+          }
+        }
+        return newArr;
+      }
+      console.log(arr.unique());
+    */
+
+    //字符串去重
+    var Str = 'aaabbbcc112200';
+    String.prototype.unique = function(){
+      var temp = {};
+      var newStr = '';
+      for(var i=0; i < this.length; i++){
+        if(!temp.hasOwnProperty(this[i])){
+          temp[this[i]] = this[i];
+          newStr += temp[this[i]];
+        }
+      }
+      return newStr;
+    }
+    console.log(Str.unique());
     </script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date对象</title>
+</head>
+<body>
+  <h1>
+    已经进行了<span>0</span>秒
+  </h1>
+  <script>
+    //实例化日期对象 Date()
+    //var date = new Date();
+
+    //getDate()方法返回当前是一个月的第几天(1-31) 
+    //gerDay()方法返回当前是一周中的第几天(0-6)因为这是外国人定义的所以我们写个方法转化一下
+    /*Date.prototype.getWeekDay = function (lang){
+      var day = this.getDay();
+      switch(day){
+        case 0:
+          return lang === 'chs' ? '星期天' : 'sunday';
+          break;
+        case 1:
+          return lang === 'chs' ? '星期一' : 'monday';
+          break;
+        case 2:
+          return lang === 'chs' ? '星期二' : 'Tuesday';
+          break;
+        case 3:
+          return lang === 'chs' ? '星期三' : 'wednesday';
+          break;
+        case 4:
+          return lang === 'chs' ? '星期四' : 'thursday';
+          break;
+        case 5:
+          return lang === 'chs' ? '星期五' : 'friday';
+          break;
+        case 6:
+          return lang === 'chs' ? '星期六' : 'saturday';
+          break;
+      }
+    }*/
+
+    //getMonth()方法返回的是当前为第几个月(0-11 +1)
+    //getFullYear()
+    //getHours()  getMinutes() getSeconds()
+    //getTime()
+    //时间戳 timeStamp 毫秒数就是当前这个时间的时间戳
+    /*var start = new Date().getTime();
+    for(var i = 0; i < 1000; i++){
+      document.write(i + ' ');
+    }
+    var end = new Date().getTime();
+    console.log(end - start);*/
+
+    //重点方法setInterval()计时器 -> window.setInterval() clearSetInterval
+    //每隔特定的毫秒数时间执行一次内部函数
+
+    //第一种写法
+    /*
+      setInterval(function (){
+      console.log('I love you gyt');
+    }, 1000);
+    */
+
+    //第二种写法
+    /*
+    setInterval(test, 1000);
+    function test(){
+      console.log(1);
+    }
+    */
+
+    //写个计数器
+    /*var first = document.getElementsByTagName('h1')[0],
+        second = first.getElementsByTagName('span')[0],
+        sec = 0;
+    setInterval(function(){
+      second.innerHTML = sec++;
+    }, 1000)
+    */
+
+    //我们来检验一下setInterval正确否
+    /*var time1 = new Date().getTime();
+    setInterval(function (){
+      var time2 = new Date().getTime();
+      console.log(time2 - time1);
+      time1 = time2;
+    }, 1000);
+    */
+
+    //setTimeout() 延时器 (延迟特定的毫秒时间执行一次)
+
+    //注意：setTimeout() 和 setInterval 的唯一标识并不会发生冲突
+
+  </script>
+</body>
+</html>

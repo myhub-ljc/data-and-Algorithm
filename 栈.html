@@ -51,25 +51,25 @@
     s.push(100)
     alert(s)*/
 
-  function transform(number) {
+  function dec2bin(dec) {
     //定义对象
     var stack = new Stack() 
     //循环操作
-    while(number > 0){
+    while(dec > 0){
       //获取余数 放入栈中
-      stack.push(number % 2)
+      stack.push(dec % 2)
       //获取整除后的结果，作为下一次运行的数字
-      number = Math.floor(number / 2)
+      dec = Math.floor(dec / 2)
     }
-    //取出0和1
+    //取出0和1(以字符串得形式)
     var ary = ''
     while(!stack.isEmpty()){
       ary += stack.pop()
     }
     return ary
   }
-  alert(transform(100))
-  alert(transform(1000))
+  alert(dec(100))
+  alert(dec(1000))
   </script>
 </body>
 </html>

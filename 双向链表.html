@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>双向链表</title>
+</head>
+<body>
+  <script>
+    //双向链表的封装
+    function DoublyLinkedList() {
+      //内部类：节点类
+      function Node(data) {
+        this.data = data
+        this.prev = null
+        this.next = null
+      }
+      //属性
+      this.head = null
+      this.tail = null
+      this.length = 0
+
+      //常见的操作：方法
+      //1,appen方法
+      DoublyLinkedList.prototype.append = function(data) {
+        //先创建节点
+        var newNode = new Node(data)
+
+        //判断添加的是不是第一个节点
+        if(this.length == 0){
+          this.head = newNode
+          this.tail = newNode
+        } else {
+          newNode.prev = this.tail
+          this.tail.next = newNode
+          this.tail = newNode
+        }
+        //length + 1
+        this.length += 1
+      }
+
+      //2,将链表转换成字符串形式
+      //toString方法
+      DoublyLinkedList.prototype.toString = function() {
+        return this.backwordString()
+      }
+
+      //forwardString方法
+      DoublyLinkedList.prototype.forwardString = function() {
+        //定义变量
+        var current = this.tail
+        var resultString = ""
+
+        //依次向前遍历获取每一个节点
+        while (current) {
+          resultString += current.data + " "
+          current = current.prev
+        }
+
+        return resultString
+      }
+
+      //backwordString方法
+      DoublyLinkedList.prototype.backwordString = function() {
+        //定义变量
+        var current = this.head
+        var resultString = ""
+
+        //依次向后遍历获取每一个节点
+        while (current) {
+          resultString += current.data + " "
+          current = current.next
+        }
+
+        return resultString
+      }
+
+      //3,insert方法
+      DoublyLinkedList.prototype.insert = function (position, data) {
+        //越界判断
+        if(position < 0 || position > this.length) return false
+
+        //根据data创建新的节点
+        var newNode = new Node(data)
+
+        //判断原来的列表是否为空
+        if(this.length == 0) {
+          this.head = newNode
+          thisl.tail = newNode
+        } else {         
+          if(position == 0) {//判断postition是否为0
+            this.head.prev = newNode
+            newNode.next = this.head
+            this.head.tail = newNode
+          } else if (position == this.length) {
+            newNode.prev = this.tail
+            this.tail.next = newNode
+            this.tail = newNode
+          } else {
+            var current = this.head
+            var index = 0 
+
+            while (index++ < position) {
+              current = current.next
+            }
+
+            //修改指针
+            newNode.next = current
+            newNode.prev = current.prev
+            current.prev.next = newNode
+            current.prev = newNode
+          }
+        }
+        //length+1
+        this.length += 1
+
+        return true
+      }
+    }
+  </script>
+</body>
+</html>

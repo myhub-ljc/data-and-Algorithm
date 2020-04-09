@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二叉搜索树</title>
+</head>
+<body>
+  <script>
+    //二叉搜索树的封装
+    function BinarySearchTree() {
+      function Node(key) {
+        this.key = key
+        this.left = null
+        this.right = null
+      }
+      //属性
+      this.root = null
+      //方法
+      //insert方法(注意递归函数的使用)
+      BinarySearchTree.prototype.insert = function (key) {
+        //先创建节点
+        var newNode = new Node(key)
+        //判断根节点是否为空
+        if(this.root == null) {
+          this.root = newNode
+        } else {
+          this.insertNode(root, newNode)
+        }
+      }
+
+      BinarySearchTree.prototype.insertNode = function (node, newNode) {
+        if(newNode.key < node.key) {
+          if(node.key == null) {
+            node.left = newNode
+          } else {
+            this.insertNode(node.left, newNode)
+          }
+        } else {
+          if(node.key == null) {
+            node.right = newNode
+          } else {
+            this.insertNode(node.right, newNode)
+          }
+        }
+      }
+
+      //树的遍历
+      //先序遍历
+      BinarySearchTree.prototype.preOrderTraversal = function (handler) {
+        this.preOrderTraversalNode(this.root, handler)
+      }
+      BinarySearchTree.prototype.preOrderTraversalNode = function (node, handler) {
+        if(node != null) {
+          //打印经过的节点
+          handler(node.key)
+          //遍历左子节点
+          this.preOrderTraversalNode(node.left, handler)
+          //遍历右子节点
+          this.preOrderTraversalNode(node.right, handler)
+        }
+      }
+
+      //中序遍历
+      BinarySearchTree.prototype.midOrderTraversal = function (handler) {
+        this.midOrderTraversalNode(this.root, handler)
+      }
+      BinarySearchTree.prototype.midOrderTraversalNode = function (node, handler) {
+        if(node != null) {         
+          //遍历左子节点
+          this.midOrderTraversalNode(node.left, handler)
+          //打印经过的节点
+          handler(node.key)
+          //遍历右子节点
+          this.midOrderTraversalNode(node.right, handler)
+        }
+      }
+
+      //后序遍历
+      BinarySearchTree.prototype.postOrderTraversal = function (handler) {
+        this.postOrderTraversalNode(this.root, handler)
+      }
+      BinarySearchTree.prototype.postOrderTraversalNode = function (node, handler) {
+        if(node != null) {         
+          //遍历左子节点
+          this.postOrderTraversalNode(node.left, handler)
+          //遍历右子节点
+          this.postOrderTraversalNode(node.right, handler)
+          //打印经过的节点
+          handler(node.key)
+        }
+      }
+
+      //寻找最值
+      //寻找最大值
+      BinarySearchTree.prototype.max = function () {
+        //寻找根节点
+        var node = this.root
+        //一直向右节点查找
+        var key = null
+        while(node != null) {
+          key = node.key
+          node = node.right
+        }
+        return key
+      }
+
+      //寻找最小值
+      BinarySearchTree.prototype.min = function () {
+        //寻找根节点
+        var node = this.root
+        //一直向右节点查找
+        var key = null
+        while(node != null) {
+          key = node.key
+          node = node.left
+        }
+        return key
+      }
+
+      //搜索特定的值(先用递归实现一下)
+      BinarySearchTree.ptototype.search = function (key) {
+        this.searchNode(this.root, key)
+      }
+      BinarySearchTree.prototype.searchNode = function (node, key) {
+        //如果node的节点值为空，就退出递归
+        if(node === null) {
+          return false
+        }
+        //比较node的key值和传入的key值得大小
+        if(node.key > key) {
+          return this.searchNode(node.left, key)
+        } else if(node.key < key) {
+          return this.searchNode(node.right, key)
+        } else {
+          return true
+        }
+      }
+    }
+  </script>
+</body>
+</html>

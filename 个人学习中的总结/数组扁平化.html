@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组扁平化</title>
+</head>
+<body>
+  <script>
+    /*
+      编写一个程序：将数组扁平化,并去除重复数据,最终得到一个升序且不重复的数组
+
+      //方法一: 主要利用的时ES6数组上的方法
+        var arr = [1,2,5,[2,4,[9,8]]]
+            arr = arr.flat(Infinity)
+        arr = Array.from(new Set(arr)).sort((a,b) => a-b)
+        console.log(arr)
+
+        也可以一行代码就能实现
+        arr = Array.from(new Set(arr.flat(Infinity))).sort((a,b) => a-b)
+        console.log(arr)
+
+
+        //方法二: 把数组直接转换位字符串即可(数组tostring之后，不管你有多少级，最后都会变为以逗号为分隔的字符串)
+        var arr = [1,2,5,[2,4,[9,8]]]
+        arr = arr.toString().split(',').map(item => {
+          return Number(item)
+        })
+        arr = Array.from(new Set(arr)).sort((a,b) => a-b)
+        console.log(arr)
+
+        //方法三: 调用数组的join并配合正则的使用(就是有点麻烦)
+        var arr = [1,2,5,[2,4,[9,8]]]
+        arr = arr.join('|').split(/(?:,|\|)/g).map(item => {
+          return Number(item)
+        })
+        arr = Array.from(new Set(arr)).sort((a,b) => a-b)
+        console.log(arr)
+
+        //方法四: JSON.stringify()
+        var arr = [1,2,5,[2,4,[9,8]]]
+        arr = JSON.stringify(arr).replace(/(\[|\])/g, '').split(',').map(item => {
+          return Number(item)
+        })
+        arr = Array.from(new Set(arr)).sort((a,b) => a-b)
+        console.log(arr)
+
+        //方法五：基于数组的some方法以及扩展运算符进行判断检测
+        var arr = [1,2,5,[2,4,[9,8]]]
+        while(arr.some(item => Array.isArray(item))) {
+          arr = [].concat(...arr)
+        }
+        arr = Array.from(new Set(arr)).sort((a,b) => a-b)
+        console.log(arr)
+      */
+     
+     //方法六：递归实现数组的扁平化
+     var arr = [1,2,5,[2,4,[9,8]]]
+     Array.prototype.myFlat = function () {
+       let result = []
+       _this = this
+       let fn = (arr) => {
+         for(let i = 0; i < arr.length; i++) {
+           let item = arr[i]
+           if(Array.isArray(item)) {
+            fn(item)
+            continue
+           }
+           result.push(item)
+         }
+       }
+       fn(_this)
+       return result
+     }
+     arr = Array.from(new Set(arr.myFlat())).sort((a,b) => a-b)
+     console.log(arr)
+  </script>
+</body>
+</html>

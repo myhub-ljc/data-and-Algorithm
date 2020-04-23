@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>html总结</title>
+</head>
+<body>
+  <!--
+    1,Doctype作用? 严格模式与混杂模式如何区分? 它们有何意义? 
+    答: Doctype作用：<!DOCTYPE>声明位于HTML文档中的第一行，处于<html>标签之前，用于告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
+
+    严格模式与混杂模式如何区分：标准模式的排版和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示，模拟老式浏览器的行为以防止站点无法工作。
+
+    它们有何意义? 如果HTML文档包含形式完整的DOCTYPE，那么他一般以标准模式呈现。DOCTYPE不存在或者格式不正确会导致文档已混杂模式呈现。
+
+    2,请用自己的话描述一个网页从开始请求到最终显示的完整过程?
+    答: (1)浏览器会首先判断用户输入的是否为合法或合理的 URL 地址，如果是那就进入下一步
+    (2)浏览器引擎将对此 URL 进行分析，如果存在缓存且未过期，则会从本地缓存提取文件，如果缓存不存在或过期，浏览器将会发起远程请求
+    (3)通过 DNS 解析域名获取该网站地址对应的服务器IP地址
+    (4)接下来就是经典的「三次握手」
+    (5)Ngnix 在监听到 HTTP（80端口）或 HTTPS（443端口）请求，根据 URL 做服务分发，分发到后端服务器或静态资源服务器，首页请求基本是分发到静态服务器，返回一个 HTML 文件
+    (6)服务器处理请求并返回响应报文，如果浏览器访问过该页面，缓存上有对应资源，将其与服务器最后修改记录对比，一致则返回 304，否则返回 200 和对应的内容。
+    (7)浏览器接收到返回信息并开始下载该 HTML文件（无缓存、200返回码）或从本地缓存提取文件（有缓存、304返回码）
+    (8)浏览器的渲染引擎在拿到HTML文件后，便开始解析构建DOM树，并根据HTML中的标记请求下载指定的类型文件
+    (9)渲染引擎将CSSom和DOM树合并为渲染树，然后进行重排。
+    (10)执行JS脚本，异步ajax、 fetch发起POST、GET请求，重新进入Ngnix分发，此次分发到后端服务器，重复上面步骤5、6、7，然后返回一个xml或json格式的信息，一般含有 code（返回码）和 result（依赖信息）
+    (11)这时候js会根据所返回的执行不同的逻辑，增删改页面元素，此时可能会发生回流或重绘。
+    首页加载结束。
+
+    3,HTML5 为什么只需要写 <!DOCTYPE HTML>?
+    答: （1）HTML5不基于SGML，因此不需要对DTD进行引用，但是需要DOCTYPE来规范浏览器的行为（让浏览器按照它们应该的方式来运行）；
+   （2）HTML4.01基于SGML，所以需要对DTD进行引用，才能让浏览器知道该文档所使用的文档类型。
+
+    4,行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？
+    答: ***行内元素***：
+    a - 锚点，em - 强调，strong - 粗体强调，span - 定义文本内区块，i - 斜体,img - 图片,b - 粗体，label - 表格标签，select - 项目选择，textarea - 多行文本输入框，sub - 下标，
+    sup - 上标，q - 短引用；
+    ***块元素***：
+    div - 常用块级，dl - 定义列表，dt，dd，ul- 非排序列表，li，ol-排序表单，p-段落，h1，h2，h3，h4，h5-标题，table-表格，fieldset - form控制组，form - 表单，
+    ***空元素***：
+    br-换行，hr-水平分割线；
+
+    5,介绍一下你对浏览器内核的理解？
+    答: 浏览器最重要或者说核心的部分是“Rendering Engine”，可大概译为“渲染引擎”，懂了吧  
+    不过 最后还可以说说渲染引擎相关的优化点: 例如： 减少使用关系型样式表的写法 也就是直接使用唯一的类名
+    减少Dom的层级啊什么的
+
+    6,常见的浏览器内核有哪些？
+    答: Trident内核：IE,MaxThon,TT,The World,360,搜狗浏览器等。[又称MSHTML]
+    Gecko内核：Netscape6及以上版本，FF,MozillaSuite/SeaMonkey等。
+    Presto内核：Opera7及以上。      [Opera内核原为：Presto，现为：Blink;]
+    Webkit内核：Safari,Chrome等。   [ Chrome的：Blink（WebKit的分支）]
+    EdgeHTML内核：Microsoft Edge。  [此内核其实是从MSHTML fork而来，删掉了几乎所有的IE私有特性]
+
+    7,html5有哪些新特性? 移除了那些元素? 如何处理HTML5新标签的浏览器兼容问题? 如何区分?
+    答: 新增的元素有绘画 canvas,
+        {
+          其实canvas本身很简单，就是去学习它的API，多看实例，多自己动手练习，多总结。
+          不过可以记录一下它常用到的API，方便以后查阅
+
+          假设html代码中有一个canvas标签：
+          <canvas id="canvas">你的浏览器不支持canvas！</canvas>
+
+          //获取canvas容器
+          var can = document.getElementById(‘canvas’);
+          //创建一个画布
+          var ctx = can.getContext(‘2d’);
+
+          另外我们可以还可以得到容器的宽和高度
+          var canWid = can.width;   //canvas 的宽度
+          var canHei = can.height;   //canvas 的高度
+
+          canvas只是一个容器，本身没有绘制的能力，因此我们要得到一个画布，使之具有绘制各种图形的能力。
+
+          例如绘制一个矩形: 
+          //填充矩形（x, y是横纵坐标，原点在canvas的左上角）
+          ctx.fillRect(x, y, width, height);
+          //边框矩形，默认1px 黑色。   
+          ctx.strokeRect(x, y, width, height);
+          //清除指定的矩形区域，变为透明
+          ctx.clearRect(x, y, width, height);       //绘制动态效果时，常用来清除整个画布
+
+          例如绘制路径：
+          //新建路径，beginPath是绘制新图形的开始
+          ctx.beginPath()
+          //路径（线）的起点，一般在上面这条命令后执行
+          ctx.moveTo(x, y)  
+          //线的终点
+          ctx.lineTo(x, y)   
+          //绘制圆形
+          ctx.arc(x, y, r, start, end, true/false)   //x, y圆心，r半径，start和end是开始和结束角度，false表示顺时针（默认），true表示逆时针。
+          //绘制弧线
+          ctx.arcTo(x1, y1, x2, y2, r);    //当前端点、(x1,y1)和(x2,y2)这三个点连成的弧线，r是半径。
+          //闭合路径，不是必须的，如果线的终点跟起点一样，会自动闭合。
+          ctx.closePath()
+          //通过线条绘制轮廓（边框）
+          ctx.stroke()   
+          //通过路径填充区域（实心）
+          ctx.fill()
+          说明：
+          1.fill()和stroke()函数表示绘图结束。如果要继续绘制，需要重新新建路径（beginPath()）。
+          2.如果lineTo()最后的路径没有封闭，fill()函数会自动封闭路径，而stroke()函数不会。
+
+          例：绘制一个三角形
+          ctx.beginPath();
+          ctx.moveTo(75, 50);    //路径起点
+          ctx.lineTo(100, 75);
+          ctx.lineTo(100, 25);
+          ctx.fill();   //自动将路径闭合，并默认填充黑色。
+
+          样式
+          1，颜色
+            ctx.fillStyle = 'red'   //针对fill()有效的颜色，还可以取值：'#fff'、'rgba(0, 0, 0, 0.5)'等。
+            ctx.strokeStyle = 'red'   //针对stroke()有效的颜色，取值同上。
+            ctx.globalAlpha = 0.5;   //透明度
+          2，线段端点
+            ctx.lineWidth = 2;   //线条宽度
+            ctx.lineCap = 'butt(默认)'、'round(圆弧)'、'square(方形)'  //线段端点显示的样式
+          3，线段连接处
+            ctx.lineJoin = 'miter(默认)'、round(圆角)、`bevel(横线)`   //两线段连接处所显示的样子
+          4，虚线
+            ctx.setLineDash([4, 2])   //设置虚线，参数为数组，第一个值为实现宽度，第二个值为空白的宽度
+            ctx.lineDashOffset = 0;   //虚线起始偏移量
+          5，渐变
+            var bg = ctx.createLinearGradient(x1, y1, x2, y2);  //定义线性渐变，渐变的起点 (x1,y1) 与终点 (x2,y2)。
+            var bg1 = ctx.createRadialGradient(50, 50, 0, 50, 50, 100);   //定义径向渐变
+            bg.addColorStop(0, 'red');  //定义好，之后开始上色
+            bg.addColorStop(0.5, 'blue');
+            bg.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
+          6，文字
+            var ctx = document.getElementById('canvas').getContext('2d');
+            ctx.shadowOffsetX = 2;     //X轴阴影距离，负值表示往上，正值表示往下
+            ctx.shadowOffsetY = 2;     //Y轴阴影距离，负值表示往左，正值表示往右
+            ctx.shadowBlur = 2;     //阴影的模糊程度
+            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";    //阴影颜色
+            ctx.font = "30px Times New Roman";    //设置字体和字体大小
+            ctx.fillStyle = "Black";
+            ctx.fillText("Sample String", 15, 30);    //实体文字
+            ctx.strokeStyle = 'red';
+            ctx.strokeText('Hello world', 15, 100);    //边框文字
+            文字的属性出了上面的列出的以外，还有以下一些属性：
+            ctx.font = '20px Times New Roman';
+            ctx.textAlign = 'center';    //start, end, left, right or center
+            ctx.textBaseline = 'middle'  //top, hanging, middle, alphabetic, ideographic, bottom
+            ctx.direction = 'inherit'   //ltr, rtl, inherit
+          7，图像
+          var img = new Image();
+          img.src= './images/background.jpg';
+          ctx.drawImage(img, 0, 0);   //img为图像，(0, 0)为起始坐标
+          这里的img可以是一个img对象，也可以是一个img元素。
+
+          <img id="img" src="./images/background.jpg" style="display:none;">
+          ctx.drawImage(document.getElementById('img'), 0, 0);
+          另外，绘制图片的时候还可以对图片进行缩放，类似于css中的background-size：
+
+          ctx.drawImage(img, 0, 0, w, h);   //w、h指定图片的宽高，则会同比例缩放。
+          8，动画
+          一帧一帧的来渲染这个元素，而且这个元素每一帧的位置都不一样，我们的眼睛看到的就是动画了。实现起来也很方便，js提供了两个方法：setTimeout 和setInterval都可以实现，但是一个有逼格的程序员实现动画是不会用这两个方法的，而是用requestAnimationFrame这个方法。有什么区别呢？下面简单做个比较。
+
+          setInterval(myFun, 10); 意思是隔一毫秒执行一个myFun函数，但是这样就有一个问题了，比如我myFun函数里面绘制的东西比较耗时，而10ms之内还没有完全绘制出来，但是这段代码强制1ms之后又开始绘制下一帧了，所以就会出现丢帧的问题；反之，如果时间设置太长，就会出现画面不流畅、视觉卡顿的问题。
+          requestAnimationFrame(myFun); 如果我们这样写，又是什么意思呢？意思是根据一定的时间间隔，会自动执行myFun函数来进行绘制。这个”一定的时间间隔”就是根据浏览器的性能或者网速快慢来决定了，总之，它会保证你绘制完这一帧，才会绘制下一帧，保证性能的同时，也保证动画的流畅。
+        }
+        用于媒介回放的 video 和 audio 元素,
+        还有 localStorage 用于在本地长期的存储数据,浏览器关闭后数据不丢失,
+        而sessionStorage的数据在浏览器关闭后自动删除,
+        此外，还新增了以下的几大类元素:
+        内容元素，article、footer、header、nav、section。
+        表单控件，calendar、date、time、email、url、search。
+        控件元素，webworker, websockt, Geolocation。
+
+    8,简述一下你对HTML语义化的理解。
+      答: HTMl语义化让页面的内容更加清晰结构化，便于浏览器的解析；
+          即使在没有css样式的情况下整个html也是以一种文档格式显示,这样也就能更加容易的阅读
+          搜索引擎的爬虫也依赖于HTML标记来确定上下文和各个关键字的权重，有利于SEO；
+          使阅读源代码的人更容易将网站分块，便于阅读、维护和理解。
+
+    9,HTML5的离线存储怎么使用？能否解释一下工作原理？
+    答: 1,在用户没有连接网络时，也可以正常访问；2，网站的一部分资源并不是经常改变，所以不需要每次都向服务器发出请求，我想正是出于这些原因，HTML5提出了一个新的特性: 离线存储
+        使用方法: 只要在你的页面头部像下面一样加入一个manifest的属性就可以了。
+        <!DOCTYPE HTML>
+        <html manifest = "cache.manifest">
+        ...
+        </html>
+
+        然后cache.manifest文件的书写方式，就像下面这样：
+
+        CACHE MANIFEST
+        #v0.11
+
+        CACHE:
+
+        js/app.js
+        css/style.css
+
+        NETWORK:
+        resourse/logo.png
+
+        FALLBACK:
+        / /offline.html
+
+        离线存储的manifest一般由三个部分组成:
+        1.CACHE:表示需要离线存储的资源列表，由于包含manifest文件的页面将被自动离线存储，所以不需要把页面自身也列出来。
+        2.NETWORK:表示在它下面列出来的资源只有在在线的情况下才能访问，他们不会被离线存储，所以在离线情况下无法使用这些资源。不过，如果在CACHE和NETWORK中有一个相同的资源，那么这个资源还是会被离线存储，也就是说CACHE的优先级更高。
+        3.FALLBACK:表示如果访问第一个资源失败，那么就使用第二个资源来替换他，比如上面这个文件表示的就是如果访问根目录下任何一个资源失败了，那么就去访问offline.html。
+
+
+    10,请描述一下 cookies，sessionStorage 和 localStorage 的区别？
+        (1)生命周期：
+          cookie：可设置失效时间，没有设置的话，默认是关闭浏览器后失效
+          localStorage：除非被手动清除，否则将会永久保存。
+          sessionStorage： 仅在当前网页会话下有效，关闭页面或浏览器后就会被清除。
+
+        (2)存放数据大小：
+          cookie：4KB左右
+          localStorage和sessionStorage：可以保存5MB的信息。
+
+        (3)http请求：
+          cookie：每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题
+          localStorage和sessionStorage：仅在客户端（即浏览器）中保存，不参与和服务器的通信
+
+        (4)易用性:
+          cookie：需要程序员自己封装，源生的Cookie接口不友好
+          localStorage和sessionStorage：源生接口可以接受，亦可再次封装来对Object和Array有更好的支持
+
+      11,iframe 有哪些缺点?
+         (1)iframe会阻塞主页面的Onload事件；
+         (2)搜索引擎的检索程序无法解读这种页面,不利于SEO；
+         (3)iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载;
+         (4)如果需要使用iframe，最好通过JavaScript动态给iframe添加src属性值
+      
+      12,Label标签的作用是什么？如何使用？
+         答: 作用：label标签用来定义表单控制间的关系，当用户选择该标签时，浏览器会自动将焦点转到和标签相关的表单控件上。
+         如何使用: <label for="Name">Number:</label>
+                  <input type="text" name="Name" id="Name" />
+      
+      13,如何实现浏览器内多个标签页之间的通信？（阿里）
+        答：调用 localStorage、cookies 等本地存储方式 
+  -->
+</body>
+</html>

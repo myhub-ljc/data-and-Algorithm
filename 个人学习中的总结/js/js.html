@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS</title>
+</head>
+<body>
+  <!--
+    1.什么是DOM？
+    答： Dom代表文档对象模型，是html和xml文档的接口；
+        当浏览器第一次读取并解析html文档时，它会创建一个基于html文档的非常大的对象；
+        DOM用于交互和修改特定元素或节点
+
+    2，event.preventDefault() 和 event.stopPropagation()方法之间有什么区别？
+    答：event.preventDefault()是用来阻止元素的默认行为的，例如：如果在表单元素中使用，它将阻止其默认提交；event.stopPropagation()是用来阻止捕获或冒泡阶段中当前事件的进一步传播；
+
+    3，如何知道是否在元素中使用了`event.preventDefault()`方法？
+    答：我们可以在事件对象中使用event.defaultPrevented()属性；我们可以根据它所返回的布尔值来判断是否在特定元素中调用了event.PreventDefault()
+
+    4，为什么此代码 `obj.someprop.x` 会引发错误?
+      const obj = {};
+      console.log(obj.someprop.x);
+      显然，由于我们尝试访问someprop属性中的x属性，而 someprop 并没有在对象中，所以值为 undefined。 记住对象本身不存在的属性，并且其原型的默认值为undefined。因为undefined没有属性x，所以试图访问将会报错。
+
+    5，js基本数据类型有哪些？复杂数据类型有哪些？
+    答：7大基本数据类型：number,null,undefined,boolean,string,bigInt,symbol;
+       复杂数据类型：object(而对象又包括了普通对象,数组对象,正则对象,日期对象),function
+    
+    6，null是对象吗？为什么？
+    答：null不是对象,因为虽然typeof null输出的是object,但是这只是js存在的一个bug；因为在js最初的版本中使用的是32位系统，为了性能考虑而使用了低位存储变量的类型信息，以000开头代表是对象而null表示为全零，所以就错误的将它判断为object
+
+    7，typeof能否正确判断数据类型？
+    答：在基本数据类型中，除了null都可以准确判断
+        在复杂数据类型中，除了函数其他都会判断为object(因此采用typeof来判断复杂数据类型是不合适的)
+    
+    8，能不能手动实现一下instanceof？
+    答：首先我们应该知道instanceof是基于原型链的查找
+      function test(left, right) {
+        //如果是基本数据类型直接返回false
+        if(left !== object && left === null) return false
+        //这里我们使用object自身的一个方法getPrototypeOf
+        let proto = Object.getPrototypeOf(left)
+        while(true) {
+          //如果查找到原型链尽头还没找到的话 就返回false
+          if(proto == null) return false
+          if(proto == right.prototype) return true
+        }
+      }
+    
+    9， [] == ![]结果是什么？为什么？
+    答：左边转换为数字0，而右边先转换为boolean值false紧接着有转为0，所以结果为true
+
+    10，函数的arguments为什么不是数组？如何转化成数组？
+    答：因为它本身并不能调用数组的方法，它只是一种对象，只不过属性是从0开始排，最后以callee和length属性结尾的，我们常将其称为类数组。
+    常见的类数组还有：用queryselector获得的节点；用getElementsByTagName获得的htmlcollection
+    那么如何将类数组转化成数组呢？
+    答: 方法一：Array.prototype.slice.call()
+        方法二：Array.from()
+        方法三：ES6的扩展运算符
+        方法四：利用concat+apply
+        方法五：利用原生js也可以轻松实现
+
+    11, forEach中return有效果吗？如何中断forEach循环？
+    答：在forEach中用return不会返回，函数会继续执行。
+    那么如何中断呢？
+      方法一：官方所推荐的方法就是使用some和every代替forEach函数，因为some在碰到return false的时候就会终止循环，而every在碰到return true的时候就会终止循环
+      方法二：使用try监视代码块，在需要中断的地方抛出异常
+
+    12，js如何判断数组中是否包含某个值
+    答：方法一：array.indexOf()(此方法判断数组中是否包含某个值,如果存在则返回数组的下标,否则返回-1)
+    方法二：array.includes(想要查找的元素)(此方法判断数组中是否存在某个值,存在则返回true,否则返回false)
+    方法三：array.find(callback)(此方法会返回满足条件的元素，如果没有，则返回undefined)
+    方法四：array.findIndex()(此方法返回数组中满足条件的第一个数组元素的下标,如果没有则返回-1)
+
+    13，什么是高阶函数？
+    答：一个函数可以接收另一个函数作为参数或者返回值为一个函数,这种函数就称为高阶函数.
+
+    14，数组中的高阶函数
+    答：(1)map
+        参数：接收两个参数，一个是回调函数，一个是回调函数的this值(可选)
+        其中回调函数
+        let nums = [1, 2, 3];
+        let obj = {val: 5};
+        let newNums = nums.map(function(item,index,array) {
+          return item + index + array[index] + this.val; 
+          //对第一个元素，1 + 0 + 1 + 5 = 7
+          //对第二个元素，2 + 1 + 2 + 5 = 10
+          //对第三个元素，3 + 2 + 3 + 5 = 13
+        }, obj);
+        console.log(newNums);//[7, 10, 13]
+
+        (2)reduce
+        参数：接收两个参数，一个为回调函数，另一个为初始值；其中回调函数中有三个默认参数，依次为积累值，当前值，数组。
+        let nums = [1,2,3];
+        let newNums = nums.reduce(function(j,c,array) {
+          return j+c
+        }, 0)
+        console.log(newNums)
+        如果不传初始值，那么就以数组中的第一个元素为积累值
+
+        (3)filter
+        参数：一个参数函数，这个函数只接受一个默认参数，就是当前元素。这个作为参数的函数返回值为一个布尔类型，决定元素是否保留。
+        filter方法返回值为一个新的数组，这个数组里面包含参数里面所有被保留的项。
+        let nums = [1,2,3,4]
+        let newNums = nums.filter(item => item % 2)
+        console.log(newNums)
+
+        (4)sort
+        参数：一个用于比较的函数，所以它有两个默认的参数值，分别是代表比较的两个值。
+
+    14，
+  -->
+</body>
+</html>

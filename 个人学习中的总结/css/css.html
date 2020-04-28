@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css总结</title>
+  <style>
+    .box{
+      position: relative;
+      width: 1000px;
+      height: 1000px;
+      background: red;
+      overflow: hidden;
+    }
+    .box1{
+      top: 0;
+      left: 0;
+      
+      position: absolute;
+      background: blue;
+    }
+    .box2{
+      background: green;
+    }
+    .box3{
+      top: 0;
+      right: 0;
+      
+      position: absolute;
+      background: wheat;
+    }
+  </style>
+</head>
+<body>
+  <!--
+    1，介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？
+    答： 盒子模型有两种：
+    （1）IE盒模型(也就我们所说的怪异盒子模型)的width和height，是content、padding、border三部分合起来的宽高。
+    （2）而标准盒子模型的width和height，是content的宽高；
+
+    2，link和@import的区别？
+    答: （1）link属于XHTML标签，而@import是CSS提供的。
+    （2）页面被加载时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载。
+    （3）import只在IE 5以上才能识别，而link是XHTML标签，无兼容问题。
+    （4）link方式的样式权重高于@import的权重。
+    （5）使用dom控制样式时的差别。当使用javascript控制dom去改变样式的时候，只能使用link标签，因为@import不是dom可以控制的。
+
+    3，经常遇到的浏览器的兼容性有哪些？原因、解决方法是什么？
+    答：（1）可以通过 Normalize.css 抹平差异，也可以定制自己的 reset.css，例如通过通配符选择器*{margin:0;padding:0;}，全局重置样式。
+    （2）给部分的属性需要加上浏览器前缀: 例如: trident内核应加上前缀-ms；webkit内核应加上前缀-webkit
+    （3）解决 IE9 以下浏览器不能使用 opacit；
+        opacity: 0.5;
+        filter: progid:DXImageTransform.Microsoft.Alpha(style = 0, opacity = 50); //IE4-IE9都支持滤镜写法
+
+    4，用纯 CSS 创建一个三角形的原理是什么？
+    答：把上、左、右三条边隐藏掉（颜色设为 transparent）
+      #demo {
+        width:0;
+        height: 0;
+        border-width: 20px;
+        border-style: solid;
+        border-color: transparent transparent red transparent;
+      }
+
+    5，如何设计一个满屏“品”字布局？
+    答：简单的方式：上面的div宽100%，下面的两个div分别宽50%，用float或inline使其不换行。
+
+    6，前端页面有哪三层构成，分别是什么？作用是什么？
+    答：最准确的网页设计思路是把网页分成三个层次，即：结构层、表示层、行为层。
+      网页的结构层（structural layer）由HTML或XHTML之类的标记语言负责创建。
+      网页的表示层（presentation layer）由CSS负责创建。
+      网页的行为层（behavior layer）这是JavaScript语言和DOM主宰的领域。
+
+    7，介绍一下 Sass 和 Less 是什么？它们有何区别？
+    答：Sass是一种动态样式语言，语法跟css一样(但多了些功能)，比css好写，而且更容易阅读。
+      Less一种动态样式语言. 将CSS赋予了动态语言的特性，如变量，继承，运算， 函数. LESS 既可以在客户端上运行 (支持IE 6+, Webkit, Firefox)，也可一在服务端运行 (借助 Node.js)。
+      区别：(1))Sass是基于Ruby的，是在服务端处理的，而Less是需要引入less.js来处理Less代码输出Css到浏览器，也可以在开发环节使用Less，然后编译成Css文件，直接放到项目中。
+      (2)变量符不一样，less是@，而Scss是$。
+      (3)输出设置，Less没有输出设置，Sass提供4中输出选项：nested, compact, compressed 和 expanded。
+      (4)Sass支持条件语句，可以使用if{}else{},for{}循环等等。而Less不支持。
+
+    8，
+
+
+
+  -->
+ <div class="box">
+  <div class="box1">sflsa</div>
+  <div class="box2">我的哦w文化fish反抗精神匮乏和是否是否是啦发生了放假咯；付款就卡算法沙克发掘卡讲课费</div>
+  <div class="box3">京哈克里夫急撒法了开发了爱发科就发觉奥卡福加快分解</div>
+</div>
+</body>
+</html>

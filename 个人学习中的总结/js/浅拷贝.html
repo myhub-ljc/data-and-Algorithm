@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浅拷贝</title>
+</head>
+<body>
+  <!--
+    首先什么是拷贝？
+    let arr = [1, 2, 3];
+    let newArr = arr;
+    newArr[0] = 100;
+
+    console.log(arr);//[100, 2, 3]
+    这是直接赋值的情况，不涉及任何拷贝。
+
+    //现在进行浅拷贝
+    let arr = [1,2,3]
+    let newArr = arr.slice()
+    newArr[0] = 100;
+    console.log(arr)
+
+    //那么实现浅拷贝的方法都有哪些呢？
+    方法一：concat实现
+    let arr = [1,23,3];
+    let newArr = arr.concat()
+    newArr[0] = 100;
+    console.log(newArr)
+    console.log(arr)
+
+    方法二：slice实现
+    let arr = [1,3,4];
+    let newArr = arr.slice();
+    newArr[0] = 100;
+    console.log(newArr)
+    console.log(arr)
+
+    方法三：ES6的扩展运算符实现
+    let arr = [1,23,4];
+    let newArr = [...arr];
+    newArr[0] = 100;
+    console.log(newArr)
+    console.log(arr)
+
+    方法四：使用Object.assign()(但需要注意的是：它拷贝的是对象的引用并不是对象本身)
+    let obj = {name: "秃头的科比"};
+    let newArr = Object.assign({}, obj, {name: "zombie"})
+    console.log(newArr)
+    console.log(obj)
+
+    方法五： 原生js实现
+    const shallowClone = (target) => {
+  if (typeof target === 'object' && target !== null) {
+    const cloneTarget = Array.isArray(target) ? []: {};
+    for (let prop in target) {
+      if (target.hasOwnProperty(prop)) {
+          cloneTarget[prop] = target[prop];
+      }
+    }
+    return cloneTarget;
+  } else {
+    return target;
+  }
+}
+  -->
+  <script>
+    
+  </script>
+</body>
+</html>

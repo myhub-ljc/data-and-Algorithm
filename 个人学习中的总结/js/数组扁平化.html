@@ -10,9 +10,10 @@
     /*
       编写一个程序：将数组扁平化,并去除重复数据,最终得到一个升序且不重复的数组
 
-      //方法一: 主要利用的时ES6数组上的方法
+      //方法一: 主要利用的是ES6数组上的方法
         var arr = [1,2,5,[2,4,[9,8]]]
-            arr = arr.flat(Infinity)
+            arr = arr.flat(Infinity)//数组扁平化
+        //数组去重并且排序
         arr = Array.from(new Set(arr)).sort((a,b) => a-b)
         console.log(arr)
 
@@ -21,7 +22,7 @@
         console.log(arr)
 
 
-        //方法二: 把数组直接转换位字符串即可(数组tostring之后，不管你有多少级，最后都会变为以逗号为分隔的字符串)
+        //方法二: 把数组直接转换为字符串即可(数组tostring之后，不管你有多少级，最后都会变为以逗号为分隔的字符串)
         var arr = [1,2,5,[2,4,[9,8]]]
         arr = arr.toString().split(',').map(item => {
           return Number(item)

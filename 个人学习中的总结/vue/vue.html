@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue</title>
+</head>
+<body>
+  <!--
+    0.那你能讲一讲MVVM吗？
+    答：MVVM是model-view-viewmodel的缩写,也就是把MVC中的controller演变成了viewmodel。
+    Model代表数据层,View代表视图层,viewmodel是view层和model层的桥梁,数据会绑定到viewmodel层并将数据渲染到页面中,视图变化的时候也会通知viewmodel层更新数据
+
+    1.简单说一下Vue2.x响应式数据原理
+    答: vue在初始化数据时，会使用Object.Property重新定义data中的所有属性，当页面使用对应的属性时，首先会进行依赖收集(也就是收集当前组件的watcher)，如果属性发生变化时，会通知相关依赖进行更新操作(也就是发布订阅)
+
+    2.那你知道Vue3.x响应式数据原理吗？
+    答：vue3.x使用Proxy替代了Object.Property。因为Proxy可以直接监听数组和对象的变化
+    Proxy只会代理对象的第一层，那么Vue3又是怎样处理这个问题的呢？
+    答：判断当前Reflect.get的返回值是否为Object，如果是则再通过reactive方法做代理， 这样就实现了深度观测。
+    监测数组的时候可能触发多次get/set，那么如何防止触发多次呢？
+    我们可以判断key是否为当前被代理对象target自身属性，也可以判断旧值与新值是否相等，只有满足以上两个条件之一时，才有可能执行trigger。
+
+    
+    答：
+  -->
+</body>
+</html>

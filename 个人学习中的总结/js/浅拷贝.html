@@ -65,7 +65,15 @@
 }
   -->
   <script>
-    
+    function person (a,b) {
+      this.a =a 
+      this.b = b
+    }
+
+    const me = new person(1,2)
+    const you = person(3,4)
+    console.log(me)
+    console.log(you)
   </script>
 </body>
 </html>

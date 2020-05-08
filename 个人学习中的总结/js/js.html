@@ -109,7 +109,105 @@
         (4)sort
         参数：一个用于比较的函数，所以它有两个默认的参数值，分别是代表比较的两个值。
 
-    14，
-  -->
+    14，promise凭借什么消灭了回调地狱?
+    答：首先应该清楚什么是回调地狱?
+        (1)多层嵌套的问题; (2)每种任务的处理结果存在两种可能性(成功或失败),那么需要每个任务的处理结果都要做出处理
+        这两个问题在回调函数时代尤为突出，因此promise的诞生就是为了解决这两个问题。
+        promise利用三大技术手段解决了回调地狱:
+          (1)回调函数的延迟绑定:
+            let readFilePromise = (filename) => {
+            fs.readFile(filename, (err, data) => {
+              if(err) {
+                reject(err);
+              }else {
+                resolve(data);
+              }
+            })
+          }
+          readFilePromise('1.json').then(data => {
+            return readFilePromise('2.json')
+          });
+          可以看出回调函数并不是直接声明的，而是通过then方法传入的，这就是延迟传入即延迟绑定;
+
+          (2)返回值穿透
+          在这里我们对上面的代码稍微做一下改动
+          let x = readFilePromise('1.json').then(data => {
+          return readFilePromise('2.json')//这是返回的Promise
+        });
+        x.then(/* 内部逻辑省略 */)
+          这里我们会根据传入的promise创建不同的promise，然后把返回的promise穿透到外层，以供后续的链式调用，这里的x指的便是内部所返回的promise。
+          而这正是返回值穿透的效果
+
+        (3)而以上两种技术的相结合便产生了链式调用的效果
+          readFilePromise('1.json').then(data => {
+          return readFilePromise('2.json');
+          }).then(data => {
+              return readFilePromise('3.json');
+          }).then(data => {
+              return readFilePromise('4.json');
+          });
+
+          以上只是解决了回调地狱的第一个问题：多层嵌套的问题，那么另外一个问题：即每次执行完任务后如何处理成功或失败的情况呢？
+
+        promise其实采用了错误冒泡的方法
+          readFilePromise('1.json').then(data => {
+          return readFilePromise('2.json');
+          }).then(data => {
+              return readFilePromise('3.json');
+          }).then(data => {
+              return readFilePromise('4.json');
+          }).catch(err => {
+            // xxx
+          })
+        
+        这样前面接收到的错误就会被catch到，就不需要频繁的检查错误了
+
+    15，promise为什么要引入微任务？
+        我们都知道promise的执行函数是同步执行的，但是其中也有异步操作，在异步操作结束后会调用reject或reslove方法，而这两者都被放到了微任务中从而进入了eventloop中。
+    
+    16，谈谈你对生成器以及协程的理解
+        答：生成器是一个带*号的“函数”(并不是真正的函数),可以通过yield关键字暂停执行和恢复执行
+        举个例子：
+          function* gen() {
+          console.log("enter");
+          let a = yield 1;
+          let b = yield (function () {return 2})();
+          return 3;
+          }
+          var g = gen() // 阻塞住，不会执行任何语句
+          console.log(typeof g)  // object  看到了吗？不是"function"
+
+          console.log(g.next())  
+          console.log(g.next())  
+          console.log(g.next())  
+          console.log(g.next()) 
+
+
+          // enter
+          // { value: 1, done: false }
+
+          // { value: 2, done: false }
+          // { value: 3, done: true }
+          // { value: undefined, done: true }
+
+    17,解释一下async和await的运行机制
+      async和await被称为js中异步终极解决方案。它既能够像co+gennerator一样用同步的方式来书写异步代码，又有底层语法的支持，无需引入第三方库。
+
+      那么什么是async？
+      答：MDN的定义：async是一个通过异步执行并隐式返回一个promise作为结果返回的函数.(注意重点：结果返回为一个promise)
+      async function func() {
+        return 100;
+      }
+      console.log(func())
+      这就是隐式返回promise的结果
+
+      那么await又做了什么呢？
+      答：
+
+      
+    -->
+    <script>
+      
+    </script>
 </body>
 </html>

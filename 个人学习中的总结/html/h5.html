@@ -15,7 +15,17 @@
     <input type="text" id="myid" tabindex="1" />
 </form>
 <script>
-  console.log(1&2&3||4)
+  Promise.resolve(1)
+  .then((res) => {
+    console.log(res)
+    return 2
+  })
+  .catch((err) => {
+    return 3
+  })
+  .then((res) => {
+    console.log(res)
+  })
 </script>
 </body>
 </html>

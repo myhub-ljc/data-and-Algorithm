@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人平时学习中对css3使用的总结</title>
+</head>
+<body>
+  <!--
+    其实css3写起来是非常有意思的，但是很难用的好，用的顺手，因此就总结一下我常用到的。
+
+
+
+    1，过渡(transition)
+    它是我在项目中用过的相对来说比较多的了，而其最主要的作用就是让一些交互效果变得不再那么生硬。
+
+    语法：transition: 指定要添加效果的css属性，花费时间，效果曲线(默认为ease)，延迟时间;
+
+    当然你也可以把上面的属性分开来写: 
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+    transition-delay: 0.5s;
+
+    使用场景: 
+    ·按钮的hover效果；·下拉菜单(具体的实现自己可以动手做一下)
+
+    2，动画(animation)
+    动画这个平常也用的比较多，主要是做一个预设的动画，它最主要的作用和过渡差不多都是让页面不会那么生硬
+
+    语法：animation: 动画名称，一个周期所花费的时间，运动曲线，动画延迟时间，播放次数，是否反向播放动画
+
+    使用场景：
+    ·loading效果；·logo的动画展示(具体的实现自己可以动手做一下)
+
+    3，形状转换(transform)
+    主要进行2d和3d的转换
+    
+    语法：transform: 适用于2D和3D转换的元素
+          transform: 转换元素的位置
+
+    4，阴影(box-shadow)
+    这个可以很方便的去给某个东西添加阴影，以前没有css3的时候，阴影只能使用图片去实现了。
+
+    语法：box-shadow: 水平阴影的位置 垂直阴影的位置 模糊距离 阴影的大小 阴影的颜色 阴影开始方向(默认是从里往外，设置inset就是从外往里)
+
+    5，边框(border)
+    ·边框圆角(border-radius)
+    语法：border-radius: 左上角，右上角，右下角，左下角;
+
+    ·边框图片(border-image)
+    它有5个可能的值：
+    ·border-image-source: 用在边框图片的路径;
+    ·border-image-slice: 图片边框向内的偏移量;
+    ·border-image-outset: 图片边框超出的偏移量;
+    ·border-image-width: 图片边框的宽度;
+    ·border-image-repeat: 图片边框是否铺满，拉伸或者平铺;
+
+    6，背景(background)
+    最近也有用到css3提供的多张背景图(是为了娱乐写的)
+    这个没什么就是在一个地方使用多张背景图(相信大家看下面一串代码就懂了，不细说了)
+    background:url('test.jpg') no-repeat left,url(logo.png) no-repeat right;
+
+    7，计算属性(calculate)
+    我最近在写项目时就有用到这个css3所提供的计算属性
+    应用场景：当我需要计算出某个页面可滚动的区域时，calculate计算属性可以利用四则运算，动态的计算出来。
+
+    
+  -->
+</body>
+</html>

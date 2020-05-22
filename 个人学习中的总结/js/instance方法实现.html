@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>instance手动实现如何检测基本数据类型以及引用数据类型</title>
+</head>
+<body>
+  <script>
+   //instance检测基本数据类型
+   class test{
+     static [Symbol.hasInstance](x) {
+       return typeof x === 'number'
+     }
+   }
+   console.log(111 instanceof test)//true
+
+   //instance检测引用数据类型
+   function test2(left, right) {
+     if(typeof left !== 'object' || left === null) return false;
+     let proto = Object.getPrototypeOf(left);
+     while(true) {
+       if(proto == null) return false;
+       if(proto == right.prototype) return true;
+     } 
+   }
+
+   console.log(test2(new String("111"), String))
+  </script>
+</body>
+</html>

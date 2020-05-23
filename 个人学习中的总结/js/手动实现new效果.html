@@ -7,7 +7,22 @@
 </head>
 <body>
   <script>
-    
+    function Animal(type) {
+      this.type = type
+    }
+    Animal.prototype.say = function () {
+      console.log('say')
+    }
+    function mockNew() {
+      let constructor = [].shift.call(arguments)
+      let obj = {}
+      obj.__proto__ = constructor.prototype
+      constructor.apply(obj, arguments)
+      return obj
+    }
+    let animal = mockNew(Animal, 'dog')
+    console.log(animal.type)
+    animal.say()
   </script>
 </body>
 </html>

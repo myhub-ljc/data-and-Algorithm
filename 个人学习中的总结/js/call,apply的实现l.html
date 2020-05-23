@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>call apply的实现</title>
+</head>
+<body>
+  <!--
+    call的实现
+    ·将函数设置为对象的属性
+    ·执行该函数
+    ·从对象上删除该函数
+    Function.prototype.myCall = function (context = window) {
+      context.fn = this
+      const arg = []
+      for(let i = 1; i<arguments.length; i++) {
+        arg.push("arguments["+i+"]")
+      }
+      const result = eval("context.fn("+arg+")")
+      delete context.fn
+      return result
+    }
+    var obj = {
+      name: 'wo'
+    }
+    function test(name, age) {
+      console.log(this.name)
+      return {
+        name,
+        age
+      }
+    }
+    console.log(test.myCall(obj, 'ke', 18))
+
+    apply的实现
+    Function.prototype.myApply = function (context = window, arr) {
+    context.fn = this;
+    let result;
+    if (!arr) {
+      result = context.fn();
+    } else {
+      var args = []
+      for (let i = 0, len = arr.length; i < len; i++) {
+        args.push("arr[" + i + "]");
+      }
+      result = eval("context.fn(" + args + ")");
+    }
+    delete context.fn;
+    return result;
+    };
+
+    bind的实现
+    
+  -->
+  <script>
+    
+  </script>
+</body>
+</html>

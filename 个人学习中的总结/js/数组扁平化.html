@@ -53,9 +53,7 @@
         }
         arr = Array.from(new Set(arr)).sort((a,b) => a-b)
         console.log(arr)
-      */
-     
-     //方法六：递归实现数组的扁平化
+         //方法六：递归实现数组的扁平化
      var arr = [1,2,5,[2,4,[9,8]]]
      Array.prototype.myFlat = function () {
        let result = []
@@ -75,6 +73,13 @@
      }
      arr = Array.from(new Set(arr.myFlat())).sort((a,b) => a-b)
      console.log(arr)
+      */
+     
+    var arr = [1,2,5,[2,4,[7,9]]]
+    arr= arr.toString().split(',').map(item => {
+      return Number(item)
+    })
+    console.log(arr)
   </script>
 </body>
 </html>

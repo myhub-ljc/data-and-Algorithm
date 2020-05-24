@@ -10,10 +10,10 @@
    //instance检测基本数据类型
    class test{
      static [Symbol.hasInstance](x) {
-       return typeof x === 'number'
+       return typeof x === 'string'
      }
    }
-   console.log(111 instanceof test)//true
+   console.log('111' instanceof test)//true
 
    //instance检测引用数据类型
    function test2(left, right) {

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>webpack学习</title>
+</head>
+<body>
+  <!--
+    首先添加我们即将使用的包：
+    npm install webpack webpack-dev-server --save-dev
+    webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关devServer的配置
+    contentBase,  // 为文件提供本地服务器
+    port, // 监听端口，默认8080
+    inline, // 设置为true,源文件发生改变自动刷新页面
+    historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+    devServer:{
+        contentBase: './src' // 本地服务器所加载的页面所在的目录
+        historyApiFallback: true, // 不跳转
+        inline: true // 实时刷新
+    }
+    然后我们在根目录下创建一个'webpack.config.js'，在'package.json'添加两个命令用于本地开发和生产发布
+    "scripts": {
+                "start": "webpack-dev-server",
+                "build": "webpack"
+            }
+
+    entry
+    entry: 用来写入口文件，它将是整个依赖关系的根
+    var baseConfig = {
+            entry: './src/index.js'
+    }
+
+    当我们需要多个入口文件的时候，可以把entry写成一个对象
+    var baseConfig = {
+            entry: {
+                main: './src/index.js'
+            }
+    }
+
+    output
+    output: 即使入口文件有多个，但是只有一个输出配置
+    var path = require('path')
+    var baseConfig = {
+        entry: {
+            main: './src/index.js'
+        },
+        output: {
+            filename: 'main.js',
+            path: path.resolve('./build')
+        }
+    }
+    module.exports = baseConfig
+
+    如果你定义的入口文件有多个，那么我们需要使用占位符来确保输出文件的唯一性
+    output: {
+        filename: '[name].js',
+        path: path.resolve('./build')
+    }
+  -->
+</body>
+</html>

@@ -54,32 +54,30 @@
         arr = Array.from(new Set(arr)).sort((a,b) => a-b)
         console.log(arr)
          //方法六：递归实现数组的扁平化
-     var arr = [1,2,5,[2,4,[9,8]]]
-     Array.prototype.myFlat = function () {
-       let result = []
-       _this = this
-       let fn = (arr) => {
-         for(let i = 0; i < arr.length; i++) {
-           let item = arr[i]
-           if(Array.isArray(item)) {
-            fn(item)
-            continue
-           }
-           result.push(item)
-         }
-       }
-       fn(_this)
-       return result
-     }
-     arr = Array.from(new Set(arr.myFlat())).sort((a,b) => a-b)
-     console.log(arr)
+        var arr = [1,2,5,[2,4,[9,8]]]
+        Array.prototype.myFlat = function () {
+          let result = []
+          _this = this
+          let fn = (arr) => {
+            for(let i = 0; i < arr.length; i++) {
+              let item = arr[i]
+              if(Array.isArray(item)) {
+                fn(item)
+                continue
+              }
+              result.push(item)
+            }
+          }
+          fn(_this)
+          return result
+        }
+        arr = Array.from(new Set(arr.myFlat())).sort((a,b) => a-b)
+        console.log(arr)
       */
      
-    var arr = [1,2,5,[2,4,[7,9]]]
-    arr= arr.toString().split(',').map(item => {
-      return Number(item)
-    })
-    console.log(arr)
+      var arr = [1,2,5,[2,4,[9,8]]]
+        arr = JSON.stringify(arr).replace(/(\[|\])/g, '').split(',')
+        console.log(arr)
   </script>
 </body>
 </html>
